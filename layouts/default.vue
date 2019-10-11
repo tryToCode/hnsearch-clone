@@ -1,6 +1,7 @@
 <template>
   <div>
     <TopHeader/>
+    <FilterRow/>
     <nuxt />
     <BottomFooter/>
   </div>
@@ -9,11 +10,13 @@
 <script>
 import TopHeader from '@/components/TopHeader.vue'
 import BottomFooter from '@/components/BottomFooter.vue'
+import FilterRow from '@/components/FilterRow.vue'
 
 export default {
   components: {
     TopHeader,
-    BottomFooter
+    BottomFooter,
+    FilterRow
   }
 }
 </script>

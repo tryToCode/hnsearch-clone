@@ -22,14 +22,14 @@
   height: 3rem;
   line-height: 3rem; /* Vertically center the text there */
   background-color: #f5f5f5;
-}
-
-.bottom-items {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   align-content: center;
+}
+
+.bottom-items {
   text-decoration: none;
 }
 
