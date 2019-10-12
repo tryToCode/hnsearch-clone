@@ -50,7 +50,9 @@ export default {
            icons: ['fab']
          }
        ]
-      }]
+      },
+      '@nuxtjs/axios'
+    ]
   ],
   /*
   ** Build configuration

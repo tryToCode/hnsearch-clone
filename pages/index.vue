@@ -4,10 +4,31 @@
       <h2 class="subtitle">
         My premium Nuxt.js project
       </h2>
+      <div>
+        {{posts}}
+      </div>
     </div>
   </div>
 </template>
 
+<script>
+import axios from 'axios';
+export default {
+  data() {
+    return {
+      posts: []
+    }
+  },
+  asyncData() {
+    return axios.get('https://hacker-news.firebaseio.com/v0/item/2921983.json?print=pretty')
+          .then(response => {
+            let posts = response.data
+            return {posts}
+          })
+        }
+}
+
+</script>
 <style>
 .container {
   margin: 0 auto;
