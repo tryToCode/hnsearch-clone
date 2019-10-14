@@ -1,33 +1,54 @@
 <template>
   <div class="container">
     <div>
-      <h2 class="subtitle">
-        My premium Nuxt.js project
-      </h2>
-      <div>
-        {{posts}}
-      </div>
+      <a v-for="story in stories" :key="story.id" class="list-data"> 
+        mein gott 
+      </a>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import { from, forkJoin } from 'rxjs'
+import { mergeMap } from 'rxjs/operators'
+
 export default {
   data() {
     return {
-      posts: []
+      stories: []
     }
   },
-  asyncData() {
-    return axios.get('https://hacker-news.firebaseio.com/v0/item/2921983.json?print=pretty')
-          .then(response => {
-            let posts = response.data
-            return {posts}
-          })
-        }
-}
 
+  methods: {
+    getStory(id) {
+      return axios.get(`https://hacker-news.firebaseio.com/v0/item/${params.id}.json`, {
+        params: {
+          id: id
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
+
+    listStories() {
+      return axios.get('https://hacker-news.firebaseio.com/v0/beststories.json')
+        .catch(error => {
+          console.log(error)
+      })
+    },
+
+    getStories() {
+      return from(this.listStories())
+      .pipe(
+        mergeMap((id) => this.getStory(id)),
+      ).subscribe(
+        (results) => { this.stories = results }
+      )
+    }
+  }
+}
 </script>
 <style>
 .container {
@@ -38,14 +59,10 @@ export default {
   text-align: center;
 }
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+.list-data {
+  background: #ddd;
+  display: inline-block;
+  margin:10px;
+  padding:10px;
 }
-
 </style>
