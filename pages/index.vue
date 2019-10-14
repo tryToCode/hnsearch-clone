@@ -2,7 +2,10 @@
   <div class="container">
     <div>
       <a v-for="story in stories" :key="story.id" class="list-data"> 
-        mein gott 
+        <h2>{{ story.data.title }}</h2>
+        <p>Type: {{ story.data.type }}</p>
+        <p>Link: {{ story.data.url }}</p>
+        <p>Score: {{ story.data.score }}</p> 
       </a>
     </div>
   </div>
@@ -20,33 +23,24 @@ export default {
     }
   },
 
-  methods: {
-    getStory(id) {
-      return axios.get(`https://hacker-news.firebaseio.com/v0/item/${params.id}.json`, {
-        params: {
-          id: id
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    },
-
-    listStories() {
-      return axios.get('https://hacker-news.firebaseio.com/v0/beststories.json')
+  created() {
+    axios.get('https://hacker-news.firebaseio.com/v0/beststories.json')
+        .then(response => {
+          this.results = response.data.slice(0, 20)
+          this.results.forEach(item => {
+              axios
+              .get("https://hacker-news.firebaseio.com/v0/item/" + item + ".json")
+              .then(result => {
+                this.stories.push(result)
+              .catch(error => {
+                console.log(error)
+              })
+            })
+          }) 
+        })
         .catch(error => {
           console.log(error)
       })
-    },
-
-    getStories() {
-      return from(this.listStories())
-      .pipe(
-        mergeMap((id) => this.getStory(id)),
-      ).subscribe(
-        (results) => { this.stories = results }
-      )
-    }
   }
 }
 </script>
@@ -61,8 +55,10 @@ export default {
 
 .list-data {
   background: #ddd;
-  display: inline-block;
-  margin:10px;
-  padding:10px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  margin: 16px;
+  padding:16px;
 }
 </style>
