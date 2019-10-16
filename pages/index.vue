@@ -17,9 +17,15 @@ import { from, forkJoin } from 'rxjs'
 import { mergeMap } from 'rxjs/operators'
 
 export default {
+  static: {
+    visiableItemsPerPage: 20
+  },
+
   data() {
     return {
-      stories: []
+      stories: [],
+      currentPage: 1,
+      pageCount: 0
     }
   },
 

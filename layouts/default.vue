@@ -1,22 +1,22 @@
 <template>
   <div>
-    <TopHeader/>
-    <FilterRow/>
+    <BaseHeader/>
+    <BaseFilterRow/>
     <nuxt />
-    <BottomFooter/>
+    <BaseFooter/>
   </div>
 </template>
 
 <script>
-import TopHeader from '@/components/TopHeader.vue'
-import BottomFooter from '@/components/BottomFooter.vue'
-import FilterRow from '@/components/FilterRow.vue'
+import BaseHeader from '@/components/BaseHeader.vue'
+import BaseFooter from '@/components/BaseFooter.vue'
+import BaseFilterRow from '@/components/BaseFilterRow.vue'
 
 export default {
   components: {
-    TopHeader,
-    BottomFooter,
-    FilterRow
+    BaseHeader,
+    BaseFooter,
+    BaseFilterRow
   }
 }
 </script>
