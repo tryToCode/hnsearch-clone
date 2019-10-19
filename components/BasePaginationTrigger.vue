@@ -1,7 +1,7 @@
 <template>
     <span class="base-pagination-trigger"
         @click="onClick">
-        {{pageNumer}}
+        {{ pageNumber }}
     </span>
 </template>
 
