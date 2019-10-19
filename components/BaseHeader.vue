@@ -8,7 +8,7 @@
           Searchbar Hacker News
         </li>
         <li>
-          <Searchbar/>
+          <BaseSearchbar/>
         </li>
         <li>
           <font-awesome-icon :icon="['fas', 'cog']"/>
@@ -19,10 +19,10 @@
 </template>
 
 <script>
-import Searchbar from './Searchbar'
+import BaseSearchbar from './BaseSearchbar'
 export default {
   components: {
-    Searchbar
+    BaseSearchbar
   }
 }
 </script>

@@ -8,13 +8,13 @@
         <p>Score: {{ story.data.score }}</p> 
       </a>
     </div>
+    <BasePagination />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import { from, forkJoin } from 'rxjs'
-import { mergeMap } from 'rxjs/operators'
+import BasePagination from '@/components/BasePagination.vue'
 
 export default {
   static: {
@@ -24,13 +24,14 @@ export default {
   data() {
     return {
       stories: [],
+      pageNumber2Items: [],
       currentPage: 1,
       pageCount: 0
     }
   },
 
   created() {
-    axios.get('https://hacker-news.firebaseio.com/v0/beststories.json')
+    axios.get('https://hacker-news.firebaseio.com/v0/topstories.json')
         .then(response => {
           this.results = response.data.slice(0, 20)
           this.results.forEach(item => {
@@ -42,14 +43,48 @@ export default {
                 console.log(error)
               })
             })
-          }) 
+          })
         })
         .catch(error => {
           console.log(error)
-      })
-  }
+      }).finally
+  },
+
+  mounted() {
+    console.log('mounted...')
+    console.log('the size of loaded stories ' + this.stories.length)
+    let stories = this.stories
+    if (this.pageNumber2Items[this.currentPage] === undefined)
+        this.pageNumber2Items[this.currentPage] = stories
+  },
+
+  computed: {
+
+  },
+
+  methods: {
+        async pageChangeHandle(value) {
+            switch(value) {
+                case 'next':
+                    this.currentPage += 1
+                    break
+                case 'previous':
+                    this.currentPage -= 1
+                    break
+                default:
+                    this.currentPage = value
+            }
+            const { data } = await axios
+                            .get()
+                            .then()
+                            .catch(error => {
+                              console.log(error)
+                            }) 
+        }
+    }
 }
 </script>
+
 <style>
 .container {
   margin: 0 auto;
