@@ -1,17 +1,19 @@
 <template>
   <div class="container">
     <div>
-      <a v-for="story in stories" :key="story.id" class="list-data"> 
+      <!--a v-for="story in pageNumber2Stories[currentPage]" 
+        :key="story.id" 
+        class="list-data"> 
         <h2>{{ story.data.title }}</h2>
         <p>Type: {{ story.data.type }}</p>
         <p>Link: {{ story.data.url }}</p>
         <p>Score: {{ story.data.score }}</p> 
-      </a>
+      </a-->
 
       <BasePagination 
         class="pagination"
         :currentPage="currentPage"
-        :pageCount="pageCount"
+        :pageCount="this.pageCount"
       />
     </div>
   </div>
@@ -20,84 +22,50 @@
 <script>
 import axios from 'axios';
 import BasePagination from '@/components/BasePagination.vue'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
-  static: {
-    visiableItemsPerPage: 20
-  },
-
   data() {
     return {
       stories: [],
+      pageNumber2Ids: [],
       pageNumber2Items: [],
       currentPage: 1,
-      pageCount: 5
     }
+  },
+
+  created() {
+    this.$store.dispatch('loadStories')
+  },
+
+  computed: {
+    ...mapState({
+      pageCount: 'pageCount'
+    })
   },
 
   components: {
     BasePagination
   },
 
-  created() {
-    axios.get('https://hacker-news.firebaseio.com/v0/topstories.json')
-        .then(response => {
-          console.log('data size ' + response.data.length)
-          this.pageCount = Math.ceil(
-            response.data.length / this.$options.static.visibleItemsPerPage
-          )
-          console.log('page count ' + this.$options.static.visibleItemsPerPage)
-          this.results = response.data.slice(0, 20)
-          this.results.forEach(item => {
-              axios
-              .get("https://hacker-news.firebaseio.com/v0/item/" + item + ".json")
-              .then(result => {
-                this.stories.push(result)
-              })
-              .catch(error => {
-                console.log(error)
-              })
-            })
-        })
-        .catch(error => {
-          console.log(error)
-      }).finally
-  },
-
-  mounted() {
-    console.log('mounted...')
-    console.log('the size of loaded stories ' + this.stories.length)
-    console.log('mounted static props ' + this.$options.static.visibleItemsPerPage)
-    let stories = this.stories
-    if (this.pageNumber2Items[this.currentPage] === undefined)
-        this.pageNumber2Items[this.currentPage] = stories
-  },
-
-  computed: {
-
-  },
-
   methods: {
-        async pageChangeHandle(value) {
-            switch(value) {
-                case 'next':
-                    this.currentPage += 1
-                    break
-                case 'previous':
-                    this.currentPage -= 1
-                    break
-                default:
-                    this.currentPage = value
-                    break
-            }
-            const { data } = await axios
-                            .get()
-                            .then()
-                            .catch(error => {
-                              console.log(error)
-                            }) 
-        }
+    async pageChangeHandle(value) {
+      switch(value) {
+          case 'next':
+              this.currentPage += 1
+              break
+          case 'previous':
+              this.currentPage -= 1
+              break
+          default:
+              this.currentPage = value
+              break
+      }
+      var stories = this.pageNumber2Stories[this.currentPage]
+      if (stories === undefined)
+        this.$store.dispatch('loadStoriesOnPageClick', this.currentPage)
     }
+  }
 }
 </script>
 
