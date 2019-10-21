@@ -7,7 +7,7 @@ export const state = () => ({
     pageCount: Number
   })
   
-  export const mutations = {
+export const mutations = {
     setStories(state, stories) {
         state.stories = stories
     },
@@ -18,6 +18,7 @@ export const state = () => ({
 
     setIds(state) {
         var i, pageNumber = 1, chunk = 20
+        console.log('mutations set ids ' + state.stories.length)
         for(i=0; i < state.stories.length; i += chunk) {
             var ids = state.stories.slice(i, i + chunk)
             state.pageNumber2Ids[pageNumber] = ids
@@ -26,24 +27,26 @@ export const state = () => ({
     },
 
     setPageCount(state) {
-        state.pageCount = Math.ceil(500 / 20)
-    }
-  }
+        state.pageCount = Math.ceil(state.stories.length / 20)
+    },
 
-  export const actions = {
-     async loadStories({commit}) {
+    assignStories2PageNumber(state) {
+
+    }
+}
+
+export const actions = {
+    async loadStories({commit}) {
         try {
             var stories = await axios
                     .get('https://hacker-news.firebaseio.com/v0/topstories.json')
-            commit('setStories', stories)
-            commit('setIds')
-            commit('setPageCount')
+            commit('setStories', stories.data)
         } catch(error) {
             console.log(error)
         }
-     },
-     
-     async loadStoriesOnPageClick({commit, state}, pageNumber) {
+    },
+    
+    async loadStoriesOnPageClick({commit, state}, pageNumber) {
         var stories = []
         var storyIds = state.pageNumber2Ids[pageNumber]    
         storyIds.forEach(elem => {
@@ -58,6 +61,12 @@ export const state = () => ({
         })
         commit('setStoriesOnPageClick', {
             'pageNumber': pageNumber, 
-            'stories': stories})
-        }
-  }
+            'stories': stories
+        })
+    },
+
+    setUp({commit}) {
+        commit('setIds')
+        commit('setPageCount')
+    }
+}

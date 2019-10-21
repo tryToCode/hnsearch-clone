@@ -1,19 +1,22 @@
 <template>
   <div class="container">
     <div>
-      <!--a v-for="story in pageNumber2Stories[currentPage]" 
+      <a v-for="story in pageNumber2Items[currentPage]" 
         :key="story.id" 
         class="list-data"> 
-        <h2>{{ story.data.title }}</h2>
-        <p>Type: {{ story.data.type }}</p>
-        <p>Link: {{ story.data.url }}</p>
-        <p>Score: {{ story.data.score }}</p> 
-      </a-->
+        <h2>{{ story.title }}</h2>
+        <p>Type: {{ story.type }}</p>
+        <p>Link: {{ story.url }}</p>
+        <p>Score: {{ story.score }}</p>
+      </a>
 
       <BasePagination 
         class="pagination"
         :currentPage="currentPage"
-        :pageCount="this.pageCount"
+        :pageCount="Number(pageCount)"
+        @nextPage="pageChangeHandle('next')"
+        @previousPage="pageChangeHandle('previous')"
+        @loadPage="pageChangeHandle"
       />
     </div>
   </div>
@@ -27,9 +30,6 @@ import { mapState, mapMutations } from 'vuex'
 export default {
   data() {
     return {
-      stories: [],
-      pageNumber2Ids: [],
-      pageNumber2Items: [],
       currentPage: 1,
     }
   },
@@ -40,8 +40,17 @@ export default {
 
   computed: {
     ...mapState({
-      pageCount: 'pageCount'
+      stories: 'stories',
+      pageCount: 'pageCount',
+      pageNumber2Items: 'pageNumber2Items'
     })
+  },
+
+  watch: {
+    stories: function(data) {
+      this.$store.dispatch('setUp')
+      this.$store.dispatch('loadStoriesOnPageClick', this.currentPage)
+    }
   },
 
   components: {
@@ -61,7 +70,7 @@ export default {
               this.currentPage = value
               break
       }
-      var stories = this.pageNumber2Stories[this.currentPage]
+      var stories = this.pageNumber2Items[this.currentPage]
       if (stories === undefined)
         this.$store.dispatch('loadStoriesOnPageClick', this.currentPage)
     }
