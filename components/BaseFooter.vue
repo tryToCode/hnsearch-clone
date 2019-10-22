@@ -19,11 +19,10 @@
   bottom: 0; */
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 3rem;
-  line-height: 3rem; /* Vertically center the text there */
+  height: 4rem;
+  line-height: 4rem; /* Vertically center the text there */
   background-color: #f5f5f5;
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
   align-content: center;
@@ -35,6 +34,8 @@
 
 .bottom-footer__link {
   padding: 10px;
+  text-decoration: none;
+  color: black;
 }
 
 </style>

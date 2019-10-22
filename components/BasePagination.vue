@@ -2,12 +2,16 @@
     <div class="base-pagination">
         <BaseButton
             :disabled="isPreviousButtonDisabled"
-            @click="previousPage"
+            @click.native="previousPage"
         >
             ←
         </BaseButton>
         <BasePaginationTrigger 
             v-for="paginationTrigger in paginationTriggers"
+            :class="{
+                'pagination-trigger-current': 
+                paginationTrigger === currentPage
+            }"
             :key="paginationTrigger"
             :pageNumber="paginationTrigger"
             class="pagination-trigger"
@@ -15,7 +19,7 @@
         />
         <BaseButton
             :disabled="isNextButtonDisabled"
-            @click="nextPage"
+            @click.native="nextPage"
         >
             →
         </BaseButton>
@@ -64,9 +68,7 @@ export default {
             const pageCount = this.pageCount
             const visiblePagesCount = this.visiblePagesCount
             const visiblePagesThreshold = (visiblePagesCount - 1) / 2
-            const pagintationTriggersArray = Array(this.visiblePagesCount - 1).fill(
-                0
-            )
+            const pagintationTriggersArray = Array(this.visiblePagesCount - 1).fill(0)
 
             if (currentPage <= visiblePagesThreshold + 1) {
                 pagintationTriggersArray[0] = 1
@@ -75,9 +77,7 @@ export default {
                     return pagintationTriggersArray[0] + index
                     }
                 )
-
                 pagintationTriggers.push(pageCount)
-
                 return pagintationTriggers
             }
 
@@ -87,9 +87,7 @@ export default {
                     return pageCount - index
                     }
                 )
-
                 pagintationTriggers.reverse().unshift(1)
-
                 return pagintationTriggers
             }
 
@@ -99,10 +97,8 @@ export default {
                     return pagintationTriggersArray[0] + index
                 }
             )
-
             pagintationTriggers.unshift(1)
             pagintationTriggers[pagintationTriggers.length - 1] = pageCount
-
             return pagintationTriggers
         }
     },
@@ -128,6 +124,7 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        margin: 20px;
     }
 
     .pagination-trigger {
@@ -135,5 +132,9 @@ export default {
         margin: 0 17px;
         font-size: 16px;
         font-weight: 600;
+    }
+
+    .pagination-trigger-current {
+        color: #FF0000
     }
 </style>

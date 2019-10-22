@@ -27,4 +27,8 @@ export default {
         cursor: pointer;
         transition: all 300ms ease;
     }
+
+    .base-pagination-trigger:hover {
+        color: #FF0000;
+    }
 </style>

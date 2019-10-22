@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <a v-for="story in pageNumber2Items[currentPage]" 
+      <a v-for="story in stories" 
         :key="story.id" 
         class="list-data"> 
         <h2>{{ story.title }}</h2>
@@ -30,7 +30,8 @@ import { mapState, mapMutations } from 'vuex'
 export default {
   data() {
     return {
-      currentPage: 1,
+      stories: [],
+      currentPage: 1
     }
   },
 
@@ -40,7 +41,6 @@ export default {
 
   computed: {
     ...mapState({
-      stories: 'stories',
       pageCount: 'pageCount',
       pageNumber2Items: 'pageNumber2Items'
     })
@@ -73,6 +73,7 @@ export default {
       var stories = this.pageNumber2Items[this.currentPage]
       if (stories === undefined)
         this.$store.dispatch('loadStoriesOnPageClick', this.currentPage)
+      this.stories = this.pageNumber2Items[this.currentPage]
     }
   }
 }
@@ -90,10 +91,10 @@ export default {
 .list-data {
   background: #ddd;
   display: flex;
-  flex-direction: row;
   align-content: center;
   margin: 16px;
   padding:16px;
+  cursor: pointer;
 }
 
 .pagination {
