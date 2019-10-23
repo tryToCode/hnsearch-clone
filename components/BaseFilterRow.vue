@@ -1,31 +1,57 @@
 <template>
-    <div class="filter-container">
-        <div class="filter-group">
-            <div>
+    <div class="container">
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
                 <label for="search-select">Search</label>
-                <select id="search-select">
-                    <option value="">Stories</option>
-                    <option value="All">All</option>
-                    <option value="comments">comments</option>
-                </select>
             </div>
-            <div>
-                <label for="by-select">by</label>
-                <select id="by-select">
-                    <option value="">Popularity</option>
-                    <option value="Date">Date</option>
-                </select>
+            <div class="field-body">
+                <div class="field">
+                    <div class="control">
+                        <div class="select">
+                            <select>
+                                <option value="">Stories</option>
+                                <option value="All">All</option>
+                                <option value="comments">comments</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <label for="for-select">for</label>
-                <select id="for-select">
-                    <option value="">All time</option>
-                    <option value="Last 24">Last 24</option>
-                    <option value="Past Week">Past Week</option>
-                    <option value="Past Month">Past Month</option>
-                    <option value="Past Year">Past Year</option>
-                    <option value="Custom Range">Custum Range</option>
-                </select>
+
+            <div class="field-label is-normal">
+                <label for="search-select">by</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <div class="control">
+                        <div class="select">
+                            <select>
+                                <option value="">Popularity</option>
+                                <option value="Date">Date</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field-label is-normal">
+                <label for="search-select">for</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <div class="control">
+                        <div class="select">
+                            <select>
+                                <option value="">All time</option>
+                                <option value="Last 24">Last 24</option>
+                                <option value="Past Week">Past Week</option>
+                                <option value="Past Month">Past Month</option>
+                                <option value="Past Year">Past Year</option>
+                                <option value="Custom Range">Custum Range</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="result-loaded-group">
