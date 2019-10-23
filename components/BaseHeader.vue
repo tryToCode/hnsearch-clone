@@ -31,7 +31,6 @@ export default {
 
  .nav {
      display: flex;
-     flex-direction: row;
      justify-content: center;
      align-items: center;
      background-color: #FF742B;
@@ -44,6 +43,6 @@ export default {
  }
 
  ul li {
-   padding: 16px;
+   padding: 0 10px;
  }
 </style>

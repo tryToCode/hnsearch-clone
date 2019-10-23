@@ -1,20 +1,34 @@
 <template>
-    <div class="search-container">
-        <span class="search-icon"><font-awesome-icon :icon="['fas', 'search']"/></span>
-        <input class="search-input" type="search" placeholder="Search Stories by title, url or author" value="">
+    <!--div class="searchContainer">
+        <i class="searchIcon"><font-awesome-icon :icon="['fas', 'search']"/></i>
+        <input class="searchBox" 
+                type="search" 
+                name="search" 
+                placeholder="Search Stories by title, url or author">
+    </div-->
+
+    <div>
+        <button class="button">Button</button>
     </div>
 </template>
 
 <style scoped>
- .search-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
- }
+ .searchContainer {
+  display: inline-flex;
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+}
 
- .search-input {
-    border-radius: 0;
+.searchIcon {
+  padding: 0.5rem;
+}
+
+.searchBox {
+  border-radius: 0;
     border: none;
     height: 42px;
     width: calc(100% - 100px);
@@ -22,5 +36,6 @@
     padding: 16px 144px 16px 54px;
     font-weight: 300;
     color: rgba(0,0,0,.8)
- }
+}
+
 </style>
